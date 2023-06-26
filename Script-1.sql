@@ -207,6 +207,12 @@ order by media desc
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 --CRUD DE PRESENCA--
 
+--calendario de aulas por curso--
+select dia_semana, nome_disciplina, p.nome_prof, o.cod_disciplina from oferecimento as o
+inner join disciplina as d on o.cod_disciplina = d.cod_disciplina
+inner join professor as p on o.registro_prof =p.registro_prof 
+where p.cod_curso='MBI6'
+
 --presença de alunos por aula--
 select nome_aluno, presente, n_aula from presenca as p
 inner join aluno as a on p.ra =a.ra 
@@ -219,6 +225,8 @@ inner join aluno as a on p.ra =a.ra
 inner join disciplina as d on d.cod_disciplina = p.cod_disciplina 
 having  p.cod_disciplina = 'RD100' and presente = true 
 group by nome_aluno
+
+
 
 --registro de presença por disciplina por auluno--
 select nome_aluno, p.n_aula, presente, data_aula from presenca as p
