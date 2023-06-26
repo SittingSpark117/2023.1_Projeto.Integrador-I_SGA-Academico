@@ -173,7 +173,7 @@ SET semestre_ano = '2023.1';
 
 ------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------
---CRUD DE NOTAS--
+-- NOTAS--
 
 --lista de cursos com disciplinas--
 select distinct (nome_curso), c.cod_curso  from curso as c ,disciplina as d
@@ -251,7 +251,7 @@ GROUP BY nome_disciplina;
 
 
 --seleção de notas por alunos-- 
-select a.nome_aluno,d.nome_disciplina, n.n_prova, n.nota_tirada  
+select d.nome_disciplina, n.n_prova, n.nota_tirada  
 from notas as n
 inner join aluno as a
 on a.ra = n.ra 

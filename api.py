@@ -185,6 +185,25 @@ def getNotasByCurso():
     return json_data
 
 
+@app.route('/notasbyalunos', methods=['GET'])
+def getNotasByAluno():
+    nome_aluno = request.args.get('nome_aluno')
+    
+    sql =   "select d.nome_disciplina, n.n_prova, n.nota_tirada  " \
+    "from notas as n " \
+    "inner join aluno as a on n.ra = a.ra " \
+    "inner join disciplina as d on d.cod_disciplina = n.cod_disciplina "\
+    "where nome_aluno = '{}' ".format(nome_aluno)
+    data = consulta(sql)
+
+    df = pd.DataFrame(data, columns=['nome_disciplina', 'n_prova','nota_tirada'])
+    # Converter o DataFrame em JSON
+    json_data = df.to_json(orient='records')
+    return json_data
+
+
+
+
 @app.route('/meidas-alunos', methods=['GET'])
 def mediaByalunoByDisciplina():
     aluno = request.args.get('cod_disciplina')
