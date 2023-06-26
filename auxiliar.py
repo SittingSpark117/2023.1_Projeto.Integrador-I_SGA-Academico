@@ -1,8 +1,9 @@
+#ESTE ARQUIVO FOU USADO PARA INSERÇÃO DE DADOS NAS TABELAS
 from flask import Flask, jsonify, request
 import psycopg2
 import pandas as pd
 import random
-
+import datetime
 
 #credenciais de conexão
 host = 'unictec.postgres.database.azure.com'
@@ -108,7 +109,7 @@ def insert_presenca_data(disciplinas, alunos_ra, num_aula):
         inserir_dados(sql, values)
 
 
-
+#gerador de oferecimento
 def insert_oferecimento_data(disciplinas, profs_registro):
   dias_da_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"]
 
@@ -121,24 +122,8 @@ def insert_oferecimento_data(disciplinas, profs_registro):
     inserir_dados(sql, values)
     
     
-    
 
-def insert_oferecimento_data(disciplinas, profs_registro):
-  dias_da_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira"]
-
-  for i in range(5):
-    semestre_ano = "2023.1"    
-    data_inicio_semestre = '01-01-2023'
-    sql = "INSERT INTO oferecimento (cod_disciplina, registro_prof,data_inicio_semestre, dia_semana, semestre_ano) " \
-          "VALUES (%s, %s, %s, %s, %s)"
-    values = (disciplinas[i],  profs_registro[i], data_inicio_semestre, dias_da_semana[i], semestre_ano)
-    inserir_dados(sql, values)
-
-
-
-
-import datetime
-
+#gerador de aulas
 def gerar_aulas_datas():
   
   data_atual = datetime.date(2023, 2, 20)
@@ -195,46 +180,9 @@ def gerar_aulas_datas():
       
       
       
-def gerar_aulas_datas2():
-    data_atual = datetime.date(2023, 2, 20)
-    semestre_ano = "2023.1"
-    ofrs = consulta("SELECT cod_disciplina FROM oferecimento")
-
-    for i, discp in enumerate(ofrs, start=1):
-        if i % 5 == 1:
-            dia_semana = data_atual.weekday()
-
-        if dia_semana < 5:  # Verifica se não é sábado ou domingo
-            sql = "INSERT INTO aulas (cod_disciplina, semestre_ano, n_aula, data_aula) " \
-                  "VALUES (%s, %s, %s, %s)"
-            values = (discp[0], semestre_ano, i, data_atual)
-            inserir_dados(sql, values)
-
-        data_atual += datetime.timedelta(days=1)
 
 
-      
-  
-      
-# gerar_aulas_datas()
 
-def gerar_aulas_datas3():   
-  data_atual = datetime.date(2023, 2,27)  # Data inicial
-  cod_disciplina = 'ADS100'
-  semestre_ano = '2023.1'
-  n_aula = 1
-  conteudo = None
-  for i in range(19):
-    sql = "INSERT INTO aulas (cod_disciplina, semestre_ano, n_aula, conteudo, data_aula) " \
-          "VALUES (%s, %s, %s, %s, %s)"
-    values = (cod_disciplina, semestre_ano, n_aula, conteudo, data_atual)
-    inserir_dados(sql, values)
-
-    data_atual += datetime.timedelta(days=7)  # Adiciona 7 dias à data atual
-
-    n_aula += 1 
-
-# gerar_aulas_datas3()
 
 
 # registros = listaProfsByCurso('RDS8')
