@@ -55,11 +55,14 @@ def inserir_dados(sql, values):
 def cadastrar():
     sql = "select cep from endereco order by RANDOM() limit 1"
     cep = consulta(sql)
-    
+    cep = str(cep[0][0])
     data = request.json
     nome = str(data['nome'])
     cpf = str(data['cpf'])
     dataNascimento = data['dataNascimento']
+    dia, mes, ano = dataNascimento.split('-')
+    dataNascimentoFormatada = f'{ano}-{mes}-{dia}'
+
     genero = str(data['genero'])
     email = str(data['email'])
     cep = str(cep)
@@ -70,7 +73,7 @@ def cadastrar():
     ra = random.randrange(10**8, 10**9)
 
     sql = "INSERT INTO aluno (ra, nome_aluno, cpf, data_nasc, genero, email, cep, cod_curso, nota_redacao, acertos_vestibular ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    values = (ra, nome, cpf, dataNascimento, genero, email, cep, cod_curso, nota_redacao, acertos_vestibular)
+    values = (ra, nome, cpf, dataNascimentoFormatada, genero, email, cep, cod_curso, nota_redacao, acertos_vestibular)
     inserir_dados(sql, values)
 
     return jsonify({'message': 'Dados inseridos com sucesso!'}), 201
@@ -196,6 +199,25 @@ def mediaByalunoByDisciplina():
 
     # Criar um DataFrame pandas com os dados retornados
     df = pd.DataFrame(data, columns=['nome_aluno', 'media'])
+
+    
+    json_data = df.to_json(orient='records')
+    return json_data
+
+
+# -----------------------------------------------AULAS/FREQUENCIA--------------------------------------
+@app.route('/calendario', methods=['GET'])
+def calendarioByCurso():
+    aluno = request.args.get('cod_curso')
+
+    sql = "select dia_semana, nome_disciplina, p.nome_prof, o.cod_disciplina from oferecimento as o " \
+        "inner join disciplina as d on o.cod_disciplina = d.cod_disciplina " \
+        "inner join professor as p on o.registro_prof =p.registro_prof " \
+        "where p.cod_curso='{}'".format(aluno)
+    data = consulta(sql)
+
+    # Criar um DataFrame pandas com os dados retornados
+    df = pd.DataFrame(data, columns=['dia_semana', 'nome_disciplina','nome_prof','cod_disciplina'])
 
     
     json_data = df.to_json(orient='records')
