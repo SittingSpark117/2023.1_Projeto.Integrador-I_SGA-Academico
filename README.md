@@ -8,9 +8,9 @@ Proposta pedagógica:
 * Implementar os requisitos em Python e PowerBI acessando o BD elaborado.
 
 Desenvolvedores:
-Alexandre Rodrigues
-Everton Santos
-Guilherme Matheus
+Alexandre Rodrigues; 
+Everton Santos; 
+Guilherme Matheus; 
 William Santos
 
 Aplicação desenvolvida: Sistema de Gerenciamento Acadêmico - UNICTEC 
