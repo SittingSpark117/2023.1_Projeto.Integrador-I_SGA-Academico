@@ -1,4 +1,4 @@
-Projeto IntegradorI - Curso Big Data Para Negócios / FATEC Ipiranga
+Projeto Integrador I - Curso Big Data Para Negócios / FATEC Ipiranga
 -------------------------------------------------------------------
 
 Proposta pedagógica:
